@@ -420,7 +420,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './styles/polaris-weweb-styles.scss';
+@import 'polaris-weweb-styles';
 
 // Apply tokens to root
 .polaris-sidebar {

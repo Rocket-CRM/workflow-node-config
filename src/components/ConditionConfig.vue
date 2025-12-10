@@ -374,7 +374,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/polaris-weweb-styles.scss';
+@import 'polaris-weweb-styles';
 
 .polaris-card {
   @include polaris-tokens;
