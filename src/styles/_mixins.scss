@@ -1,0 +1,1878 @@
+// ============================================
+// POLARIS COMPONENT MIXINS
+// Reusable component patterns
+// ============================================
+
+// ==================== BUTTONS ====================
+
+@mixin polaris-button-base {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--p-space-100);
+  min-height: 36px;
+  min-width: 36px;
+  padding: var(--p-space-150) var(--p-space-300);
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  font-weight: var(--p-font-weight-medium);
+  line-height: var(--p-font-line-height-400);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--p-border-radius-200);
+  transition: background var(--p-motion-duration-150) var(--p-motion-ease),
+              box-shadow var(--p-motion-duration-150) var(--p-motion-ease),
+              color var(--p-motion-duration-150) var(--p-motion-ease);
+
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+@mixin polaris-button-default {
+  @include polaris-button-base;
+  background: var(--p-color-bg-surface);
+  color: var(--p-color-text);
+  box-shadow: 0 0 0 1px var(--p-color-border), var(--p-shadow-button);
+
+  &:hover:not(:disabled) {
+    background: var(--p-color-bg-surface-hover);
+    box-shadow: 0 0 0 1px var(--p-color-border-hover);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--p-color-bg-surface-active);
+  }
+}
+
+@mixin polaris-button-primary {
+  @include polaris-button-base;
+  background: var(--p-color-bg-fill-brand);
+  color: var(--p-color-text-on-color);
+  box-shadow: var(--p-shadow-button-primary);
+
+  &:hover:not(:disabled) {
+    background: var(--p-color-bg-fill-brand-hover);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--p-color-bg-fill-brand-active);
+    box-shadow: none;
+  }
+
+  &:disabled {
+    background: var(--p-color-bg-fill-brand-disabled);
+  }
+}
+
+@mixin polaris-button-plain {
+  @include polaris-button-base;
+  background: transparent;
+  color: var(--p-color-text-brand);
+  padding: var(--p-space-100);
+  min-height: auto;
+  box-shadow: none;
+
+  &:hover:not(:disabled) {
+    background: var(--p-color-bg-fill-transparent-hover);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--p-color-bg-fill-transparent-active);
+  }
+}
+
+@mixin polaris-button-critical {
+  @include polaris-button-base;
+  background: var(--p-color-bg-fill-critical);
+  color: var(--p-color-text-on-color);
+  box-shadow: var(--p-shadow-button-primary);
+
+  &:hover:not(:disabled) {
+    background: #bc2200;
+  }
+
+  &:active:not(:disabled) {
+    background: #a21b00;
+  }
+}
+
+@mixin polaris-button-outline {
+  @include polaris-button-base;
+  background: transparent;
+  color: var(--p-color-text);
+  border: 2px dashed var(--p-color-border);
+
+  &:hover:not(:disabled) {
+    background: var(--p-color-bg-fill-transparent-hover);
+    border-color: var(--p-color-border-hover);
+  }
+}
+
+@mixin polaris-button-slim {
+  min-height: 28px;
+  padding: var(--p-space-100) var(--p-space-200);
+  font-size: var(--p-font-size-300);
+}
+
+@mixin polaris-button-full-width {
+  width: 100%;
+}
+
+@mixin polaris-button-icon-only {
+  padding: var(--p-space-200);
+  min-width: 36px;
+}
+
+// ==================== CARDS ====================
+
+@mixin polaris-card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-card);
+}
+
+@mixin polaris-card-subdued {
+  background: var(--p-color-bg-surface-secondary);
+  box-shadow: none;
+  border: 1px solid var(--p-color-border);
+}
+
+@mixin polaris-card-section {
+  padding: var(--p-space-400);
+
+  & + & {
+    border-top: 1px solid var(--p-color-border);
+  }
+}
+
+// ==================== FORM ELEMENTS ====================
+
+@mixin polaris-label {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  font-weight: var(--p-font-weight-medium);
+  line-height: var(--p-font-line-height-400);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-input {
+  width: 100%;
+  min-height: 36px;
+  padding: var(--p-space-200) var(--p-space-300);
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  line-height: var(--p-font-line-height-400);
+  color: var(--p-color-text);
+  background: var(--p-color-bg-surface);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  box-shadow: var(--p-shadow-inset-100);
+  transition: border-color var(--p-motion-duration-150) var(--p-motion-ease),
+              box-shadow var(--p-motion-duration-150) var(--p-motion-ease);
+
+  &::placeholder {
+    color: var(--p-color-text-secondary);
+  }
+
+  &:hover:not(:disabled):not(:focus) {
+    border-color: var(--p-color-border-hover);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--p-color-focus-ring);
+    box-shadow: 0 0 0 1px var(--p-color-focus-ring);
+  }
+
+  &:disabled {
+    background: var(--p-color-bg-surface-disabled);
+    color: var(--p-color-text-disabled);
+    border-color: var(--p-color-border-disabled);
+    cursor: not-allowed;
+  }
+}
+
+@mixin polaris-textarea {
+  @include polaris-input;
+  resize: vertical;
+  min-height: 80px;
+}
+
+@mixin polaris-select {
+  @include polaris-input;
+  padding-right: var(--p-space-600);
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%235c5f62' d='M10 14a.997.997 0 01-.707-.293l-5-5a.999.999 0 111.414-1.414L10 11.586l4.293-4.293a.999.999 0 111.414 1.414l-5 5A.997.997 0 0110 14z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--p-space-200) center;
+  background-size: 20px 20px;
+}
+
+@mixin polaris-help-text {
+  font-size: var(--p-font-size-300);
+  color: var(--p-color-text-secondary);
+  line-height: var(--p-font-line-height-300);
+}
+
+@mixin polaris-error-text {
+  font-size: var(--p-font-size-300);
+  color: var(--p-color-text-critical);
+  line-height: var(--p-font-line-height-300);
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-100);
+}
+
+// ==================== BADGES ====================
+
+@mixin polaris-badge-base {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--p-space-100);
+  padding: var(--p-space-100) var(--p-space-200);
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  line-height: var(--p-font-line-height-300);
+  border-radius: var(--p-border-radius-full);
+  white-space: nowrap;
+}
+
+@mixin polaris-badge-default {
+  @include polaris-badge-base;
+  background: var(--p-color-bg-fill);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-badge-info {
+  @include polaris-badge-base;
+  background: var(--p-color-bg-fill-info-secondary);
+  color: var(--p-color-text-info);
+}
+
+@mixin polaris-badge-success {
+  @include polaris-badge-base;
+  background: var(--p-color-bg-fill-success-secondary);
+  color: var(--p-color-text-success);
+}
+
+@mixin polaris-badge-warning {
+  @include polaris-badge-base;
+  background: var(--p-color-bg-fill-warning-secondary);
+  color: var(--p-color-text-warning);
+}
+
+@mixin polaris-badge-critical {
+  @include polaris-badge-base;
+  background: var(--p-color-bg-fill-critical-secondary);
+  color: var(--p-color-text-critical);
+}
+
+// ==================== BANNERS ====================
+
+@mixin polaris-banner-base {
+  display: flex;
+  gap: var(--p-space-300);
+  padding: var(--p-space-300) var(--p-space-400);
+  border-radius: var(--p-border-radius-200);
+}
+
+@mixin polaris-banner-info {
+  @include polaris-banner-base;
+  background: var(--p-color-bg-fill-info-secondary);
+  border: 1px solid var(--p-color-border-info);
+}
+
+@mixin polaris-banner-success {
+  @include polaris-banner-base;
+  background: var(--p-color-bg-fill-success-secondary);
+  border: 1px solid var(--p-color-border-success);
+}
+
+@mixin polaris-banner-warning {
+  @include polaris-banner-base;
+  background: var(--p-color-bg-fill-warning-secondary);
+  border: 1px solid var(--p-color-border-warning);
+}
+
+@mixin polaris-banner-critical {
+  @include polaris-banner-base;
+  background: var(--p-color-bg-fill-critical-secondary);
+  border: 1px solid var(--p-color-border-critical);
+}
+
+// ==================== LAYOUT ====================
+
+@mixin polaris-inline($gap: var(--p-space-200)) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin polaris-block-stack($gap: var(--p-space-400)) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+// ==================== TEXT ====================
+
+@mixin polaris-text-heading-xl {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-700);
+  font-weight: var(--p-font-weight-bold);
+  line-height: var(--p-font-line-height-700);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-text-heading-lg {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-600);
+  font-weight: var(--p-font-weight-semibold);
+  line-height: var(--p-font-line-height-600);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-text-heading-md {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-500);
+  font-weight: var(--p-font-weight-semibold);
+  line-height: var(--p-font-line-height-500);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-text-heading-sm {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-400);
+  font-weight: var(--p-font-weight-semibold);
+  line-height: var(--p-font-line-height-500);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-text-body {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  line-height: var(--p-font-line-height-400);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-text-body-subdued {
+  @include polaris-text-body;
+  color: var(--p-color-text-secondary);
+}
+
+// ==================== ICONS ====================
+
+@mixin polaris-icon($size: 20px) {
+  width: $size;
+  height: $size;
+  color: var(--p-color-icon);
+}
+
+@mixin polaris-icon-small {
+  @include polaris-icon(16px);
+}
+
+// ==================== BUTTON GROUP ====================
+
+@mixin polaris-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--p-space-200);
+}
+
+@mixin polaris-button-group-segmented {
+  display: flex;
+  
+  > * {
+    border-radius: 0;
+    margin-left: -1px;
+    
+    &:first-child {
+      border-radius: var(--p-border-radius-200) 0 0 var(--p-border-radius-200);
+      margin-left: 0;
+    }
+    
+    &:last-child {
+      border-radius: 0 var(--p-border-radius-200) var(--p-border-radius-200) 0;
+    }
+  }
+}
+
+// ==================== LINK ====================
+
+@mixin polaris-link {
+  color: var(--p-color-text-brand);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--p-motion-duration-150) var(--p-motion-ease);
+  
+  &:hover {
+    color: var(--p-color-text-brand);
+    text-decoration: underline;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+    border-radius: var(--p-border-radius-050);
+  }
+}
+
+@mixin polaris-link-monochrome {
+  color: var(--p-color-text);
+  text-decoration: underline;
+  
+  &:hover {
+    color: var(--p-color-text);
+  }
+}
+
+// ==================== CHECKBOX ====================
+
+@mixin polaris-checkbox-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--p-space-200);
+  cursor: pointer;
+}
+
+@mixin polaris-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin: 0;
+  border: 2px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-100);
+  background: var(--p-color-bg-surface);
+  cursor: pointer;
+  transition: all var(--p-motion-duration-150) var(--p-motion-ease);
+  position: relative;
+  
+  &:hover:not(:disabled) {
+    border-color: var(--p-color-border-hover);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+  }
+  
+  &:checked {
+    background: var(--p-color-bg-fill-brand);
+    border-color: var(--p-color-bg-fill-brand);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      width: 4px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+  
+  &:indeterminate {
+    background: var(--p-color-bg-fill-brand);
+    border-color: var(--p-color-bg-fill-brand);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 3px;
+      width: 8px;
+      height: 2px;
+      background: white;
+    }
+  }
+  
+  &:disabled {
+    background: var(--p-color-bg-surface-disabled);
+    border-color: var(--p-color-border-disabled);
+    cursor: not-allowed;
+  }
+}
+
+// ==================== RADIO ====================
+
+@mixin polaris-radio-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--p-space-200);
+  cursor: pointer;
+}
+
+@mixin polaris-radio {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin: 0;
+  border: 2px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-full);
+  background: var(--p-color-bg-surface);
+  cursor: pointer;
+  transition: all var(--p-motion-duration-150) var(--p-motion-ease);
+  position: relative;
+  
+  &:hover:not(:disabled) {
+    border-color: var(--p-color-border-hover);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+  }
+  
+  &:checked {
+    border-color: var(--p-color-bg-fill-brand);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 8px;
+      height: 8px;
+      border-radius: var(--p-border-radius-full);
+      background: var(--p-color-bg-fill-brand);
+    }
+  }
+  
+  &:disabled {
+    background: var(--p-color-bg-surface-disabled);
+    border-color: var(--p-color-border-disabled);
+    cursor: not-allowed;
+  }
+}
+
+// ==================== SWITCH / TOGGLE ====================
+
+@mixin polaris-switch-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-200);
+  cursor: pointer;
+}
+
+@mixin polaris-switch {
+  appearance: none;
+  width: 36px;
+  height: 20px;
+  margin: 0;
+  border-radius: var(--p-border-radius-full);
+  background: var(--p-color-bg-fill);
+  cursor: pointer;
+  transition: background var(--p-motion-duration-150) var(--p-motion-ease);
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: var(--p-border-radius-full);
+    background: white;
+    box-shadow: var(--p-shadow-button);
+    transition: transform var(--p-motion-duration-150) var(--p-motion-ease);
+  }
+  
+  &:hover:not(:disabled) {
+    background: var(--p-color-bg-fill-hover);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+  }
+  
+  &:checked {
+    background: var(--p-color-bg-fill-brand);
+    
+    &::after {
+      transform: translateX(16px);
+    }
+    
+    &:hover:not(:disabled) {
+      background: var(--p-color-bg-fill-brand-hover);
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ==================== SEARCH FIELD ====================
+
+@mixin polaris-search-field {
+  @include polaris-input;
+  padding-left: var(--p-space-800);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%235c5f62' d='M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8m9.707 4.293-4.82-4.82A5.968 5.968 0 0 0 14 8 6 6 0 0 0 2 8a6 6 0 0 0 6 6 5.968 5.968 0 0 0 3.473-1.113l4.82 4.82a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left var(--p-space-300) center;
+  background-size: 20px 20px;
+}
+
+@mixin polaris-search-field-clearable {
+  @include polaris-search-field;
+  padding-right: var(--p-space-800);
+}
+
+// ==================== DIVIDER ====================
+
+@mixin polaris-divider {
+  height: 1px;
+  background: var(--p-color-border);
+  border: none;
+  margin: 0;
+}
+
+@mixin polaris-divider-thick {
+  height: 2px;
+  background: var(--p-color-border);
+}
+
+// ==================== AVATAR ====================
+
+@mixin polaris-avatar($size: 40px) {
+  width: $size;
+  height: $size;
+  min-width: $size;
+  border-radius: var(--p-border-radius-full);
+  background: var(--p-color-bg-fill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@mixin polaris-avatar-small {
+  @include polaris-avatar(32px);
+}
+
+@mixin polaris-avatar-large {
+  @include polaris-avatar(60px);
+}
+
+@mixin polaris-avatar-xl {
+  @include polaris-avatar(80px);
+}
+
+@mixin polaris-avatar-initials {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  font-weight: var(--p-font-weight-semibold);
+  color: var(--p-color-text);
+  text-transform: uppercase;
+}
+
+// ==================== THUMBNAIL ====================
+
+@mixin polaris-thumbnail($size: 60px) {
+  width: $size;
+  height: $size;
+  min-width: $size;
+  border-radius: var(--p-border-radius-100);
+  background: var(--p-color-bg-fill);
+  border: 1px solid var(--p-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@mixin polaris-thumbnail-small {
+  @include polaris-thumbnail(40px);
+}
+
+@mixin polaris-thumbnail-large {
+  @include polaris-thumbnail(80px);
+}
+
+// ==================== CHIP / TAG ====================
+
+@mixin polaris-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--p-space-100);
+  padding: var(--p-space-050) var(--p-space-200);
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-300);
+  color: var(--p-color-text);
+  background: var(--p-color-bg-fill);
+  border-radius: var(--p-border-radius-100);
+  max-width: 100%;
+}
+
+@mixin polaris-chip-removable {
+  @include polaris-chip;
+  padding-right: var(--p-space-100);
+}
+
+@mixin polaris-chip-clickable {
+  @include polaris-chip;
+  cursor: pointer;
+  transition: background var(--p-motion-duration-150) var(--p-motion-ease);
+  
+  &:hover {
+    background: var(--p-color-bg-fill-hover);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+// ==================== SPINNER ====================
+
+@mixin polaris-spinner($size: 20px) {
+  width: $size;
+  height: $size;
+  border: 2px solid var(--p-color-border);
+  border-top-color: var(--p-color-bg-fill-brand);
+  border-radius: var(--p-border-radius-full);
+  animation: polaris-spin 0.8s linear infinite;
+}
+
+@mixin polaris-spinner-small {
+  @include polaris-spinner(16px);
+}
+
+@mixin polaris-spinner-large {
+  @include polaris-spinner(44px);
+  border-width: 3px;
+}
+
+@keyframes polaris-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ==================== PROGRESS BAR ====================
+
+@mixin polaris-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--p-color-bg-fill);
+  border-radius: var(--p-border-radius-full);
+  overflow: hidden;
+}
+
+@mixin polaris-progress-bar-fill {
+  height: 100%;
+  background: var(--p-color-bg-fill-brand);
+  border-radius: var(--p-border-radius-full);
+  transition: width var(--p-motion-duration-200) var(--p-motion-ease);
+}
+
+@mixin polaris-progress-bar-small {
+  height: 4px;
+}
+
+// ==================== SKELETON ====================
+
+@mixin polaris-skeleton-base {
+  background: linear-gradient(
+    90deg,
+    var(--p-color-bg-fill) 25%,
+    var(--p-color-bg-surface-hover) 50%,
+    var(--p-color-bg-fill) 75%
+  );
+  background-size: 200% 100%;
+  animation: polaris-skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--p-border-radius-100);
+}
+
+@mixin polaris-skeleton-text {
+  @include polaris-skeleton-base;
+  height: 16px;
+  width: 100%;
+}
+
+@mixin polaris-skeleton-display-text {
+  @include polaris-skeleton-base;
+  height: 28px;
+  width: 120px;
+}
+
+@mixin polaris-skeleton-body-text {
+  @include polaris-skeleton-base;
+  height: 12px;
+  width: 100%;
+  
+  & + & {
+    margin-top: var(--p-space-200);
+  }
+}
+
+@mixin polaris-skeleton-thumbnail {
+  @include polaris-skeleton-base;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--p-border-radius-100);
+}
+
+@keyframes polaris-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// ==================== TABLE ====================
+
+@mixin polaris-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+}
+
+@mixin polaris-table-header {
+  text-align: left;
+  padding: var(--p-space-300) var(--p-space-400);
+  font-weight: var(--p-font-weight-semibold);
+  color: var(--p-color-text);
+  background: var(--p-color-bg-surface-secondary);
+  border-bottom: 1px solid var(--p-color-border);
+}
+
+@mixin polaris-table-cell {
+  padding: var(--p-space-300) var(--p-space-400);
+  color: var(--p-color-text);
+  border-bottom: 1px solid var(--p-color-border);
+  vertical-align: middle;
+}
+
+@mixin polaris-table-row-hover {
+  &:hover {
+    background: var(--p-color-bg-surface-hover);
+  }
+}
+
+@mixin polaris-table-row-selected {
+  background: var(--p-color-bg-surface-selected);
+}
+
+@mixin polaris-table-numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+// ==================== GRID ====================
+
+@mixin polaris-grid($columns: 12, $gap: var(--p-space-400)) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+@mixin polaris-grid-cell($span: 1) {
+  grid-column: span $span;
+}
+
+// Responsive grid
+@mixin polaris-grid-responsive {
+  display: grid;
+  gap: var(--p-space-400);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+// ==================== LIST ====================
+
+@mixin polaris-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin polaris-list-bulleted {
+  margin: 0;
+  padding-left: var(--p-space-500);
+  list-style-type: disc;
+  
+  li {
+    padding: var(--p-space-100) 0;
+  }
+}
+
+@mixin polaris-list-numbered {
+  margin: 0;
+  padding-left: var(--p-space-500);
+  list-style-type: decimal;
+  
+  li {
+    padding: var(--p-space-100) 0;
+  }
+}
+
+// ==================== TOOLTIP ====================
+// CSS-only tooltip (requires data-tooltip attribute)
+
+@mixin polaris-tooltip-trigger {
+  position: relative;
+  
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--p-space-100) var(--p-space-200);
+    background: var(--p-color-text);
+    color: var(--p-color-text-on-color);
+    font-family: var(--p-font-family-sans);
+    font-size: var(--p-font-size-300);
+    line-height: var(--p-font-line-height-300);
+    border-radius: var(--p-border-radius-100);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--p-motion-duration-150) var(--p-motion-ease),
+                visibility var(--p-motion-duration-150) var(--p-motion-ease);
+    z-index: 100;
+    pointer-events: none;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--p-color-text);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--p-motion-duration-150) var(--p-motion-ease),
+                visibility var(--p-motion-duration-150) var(--p-motion-ease);
+    z-index: 100;
+  }
+  
+  &:hover::after,
+  &:hover::before,
+  &:focus-visible::after,
+  &:focus-visible::before {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// ==================== POPOVER ====================
+// Base styling for popover containers
+
+@mixin polaris-popover {
+  position: absolute;
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-200);
+  box-shadow: var(--p-shadow-popover);
+  z-index: 200;
+  min-width: 200px;
+  max-width: 400px;
+}
+
+@mixin polaris-popover-content {
+  padding: var(--p-space-300);
+}
+
+@mixin polaris-popover-actions {
+  padding: var(--p-space-200);
+  border-top: 1px solid var(--p-color-border);
+}
+
+// ==================== MODAL ====================
+// Base styling for modal dialogs
+
+@mixin polaris-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin polaris-modal {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-popover);
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin polaris-modal-header {
+  padding: var(--p-space-400);
+  border-bottom: 1px solid var(--p-color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin polaris-modal-content {
+  padding: var(--p-space-400);
+  overflow-y: auto;
+  flex: 1;
+}
+
+@mixin polaris-modal-footer {
+  padding: var(--p-space-400);
+  border-top: 1px solid var(--p-color-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--p-space-200);
+}
+
+// ==================== ACTION LIST ====================
+
+@mixin polaris-action-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--p-space-100) 0;
+}
+
+@mixin polaris-action-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-200);
+  padding: var(--p-space-200) var(--p-space-300);
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  color: var(--p-color-text);
+  cursor: pointer;
+  transition: background var(--p-motion-duration-100) var(--p-motion-ease);
+  
+  &:hover {
+    background: var(--p-color-bg-surface-hover);
+  }
+  
+  &:active {
+    background: var(--p-color-bg-surface-active);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: -2px;
+  }
+}
+
+@mixin polaris-action-list-item-destructive {
+  color: var(--p-color-text-critical);
+  
+  &:hover {
+    background: var(--p-color-bg-fill-critical-secondary);
+  }
+}
+
+// ==================== PAGINATION ====================
+
+@mixin polaris-pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-100);
+}
+
+@mixin polaris-pagination-button {
+  @include polaris-button-base;
+  background: var(--p-color-bg-surface);
+  color: var(--p-color-text);
+  min-width: 36px;
+  min-height: 36px;
+  padding: var(--p-space-200);
+  border: 1px solid var(--p-color-border);
+  
+  &:hover:not(:disabled) {
+    background: var(--p-color-bg-surface-hover);
+    border-color: var(--p-color-border-hover);
+  }
+  
+  &:disabled {
+    color: var(--p-color-text-disabled);
+    border-color: var(--p-color-border-disabled);
+  }
+}
+
+// ==================== TABS ====================
+
+@mixin polaris-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--p-color-border);
+  gap: var(--p-space-400);
+}
+
+@mixin polaris-tab {
+  padding: var(--p-space-300) var(--p-space-100);
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text-secondary);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color var(--p-motion-duration-150) var(--p-motion-ease),
+              border-color var(--p-motion-duration-150) var(--p-motion-ease);
+  
+  &:hover {
+    color: var(--p-color-text);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+@mixin polaris-tab-selected {
+  color: var(--p-color-text);
+  border-bottom-color: var(--p-color-bg-fill-brand);
+}
+
+@mixin polaris-tab-panel {
+  padding: var(--p-space-400) 0;
+}
+
+// ==================== EMPTY STATE ====================
+
+@mixin polaris-empty-state {
+  text-align: center;
+  padding: var(--p-space-800) var(--p-space-400);
+}
+
+@mixin polaris-empty-state-image {
+  max-width: 200px;
+  margin: 0 auto var(--p-space-400);
+}
+
+@mixin polaris-empty-state-heading {
+  @include polaris-text-heading-md;
+  margin-bottom: var(--p-space-200);
+}
+
+@mixin polaris-empty-state-content {
+  @include polaris-text-body-subdued;
+  margin-bottom: var(--p-space-400);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// ==================== RESOURCE ITEM ====================
+
+@mixin polaris-resource-item {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-300);
+  padding: var(--p-space-300) var(--p-space-400);
+  border-bottom: 1px solid var(--p-color-border);
+  cursor: pointer;
+  transition: background var(--p-motion-duration-100) var(--p-motion-ease);
+  
+  &:hover {
+    background: var(--p-color-bg-surface-hover);
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+@mixin polaris-resource-item-selected {
+  background: var(--p-color-bg-surface-selected);
+}
+
+// ==================== PAGE ====================
+
+@mixin polaris-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--p-space-400);
+}
+
+@mixin polaris-page-header {
+  margin-bottom: var(--p-space-400);
+}
+
+@mixin polaris-page-title {
+  @include polaris-text-heading-xl;
+}
+
+@mixin polaris-page-actions {
+  display: flex;
+  gap: var(--p-space-200);
+  margin-top: var(--p-space-200);
+}
+
+// ==================== DESCRIPTION LIST ====================
+
+@mixin polaris-description-list {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) 2fr;
+  gap: var(--p-space-200) var(--p-space-400);
+}
+
+@mixin polaris-description-term {
+  font-weight: var(--p-font-weight-semibold);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-description-details {
+  color: var(--p-color-text);
+}
+
+// ==================== CALLOUT CARD ====================
+
+@mixin polaris-callout-card {
+  @include polaris-card;
+  display: flex;
+  gap: var(--p-space-400);
+  padding: var(--p-space-400);
+}
+
+@mixin polaris-callout-card-content {
+  flex: 1;
+}
+
+@mixin polaris-callout-card-image {
+  width: 100px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+// ==================== DATE FIELD ====================
+
+@mixin polaris-date-field {
+  @include polaris-input;
+  padding-right: var(--p-space-800);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%235c5f62' d='M7 2a1 1 0 0 0-1 1v1H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1V3a1 1 0 1 0-2 0v1H8V3a1 1 0 0 0-1-1ZM5 9h10v7H5V9Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--p-space-300) center;
+  background-size: 20px 20px;
+  cursor: pointer;
+}
+
+@mixin polaris-datetime-field {
+  @include polaris-date-field;
+}
+
+// ==================== DATE PICKER ====================
+
+@mixin polaris-date-picker {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-200);
+  box-shadow: var(--p-shadow-popover);
+  padding: var(--p-space-300);
+  width: 280px;
+}
+
+@mixin polaris-date-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--p-space-300);
+}
+
+@mixin polaris-date-picker-title {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  font-weight: var(--p-font-weight-semibold);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-date-picker-nav {
+  display: flex;
+  gap: var(--p-space-100);
+}
+
+@mixin polaris-date-picker-nav-button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--p-border-radius-100);
+  color: var(--p-color-icon);
+  cursor: pointer;
+  transition: background var(--p-motion-duration-100) var(--p-motion-ease);
+  
+  &:hover {
+    background: var(--p-color-bg-surface-hover);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: -2px;
+  }
+  
+  &:disabled {
+    color: var(--p-color-icon-disabled);
+    cursor: not-allowed;
+  }
+}
+
+@mixin polaris-date-picker-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: var(--p-space-100);
+}
+
+@mixin polaris-date-picker-weekday {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text-secondary);
+  text-align: center;
+  padding: var(--p-space-100);
+}
+
+@mixin polaris-date-picker-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--p-space-025);
+}
+
+@mixin polaris-date-picker-day {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  color: var(--p-color-text);
+  background: transparent;
+  border: none;
+  border-radius: var(--p-border-radius-100);
+  cursor: pointer;
+  transition: background var(--p-motion-duration-100) var(--p-motion-ease);
+  
+  &:hover:not(:disabled) {
+    background: var(--p-color-bg-surface-hover);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: -2px;
+  }
+}
+
+@mixin polaris-date-picker-day-selected {
+  background: var(--p-color-bg-fill-brand);
+  color: var(--p-color-text-on-color);
+  
+  &:hover:not(:disabled) {
+    background: var(--p-color-bg-fill-brand-hover);
+  }
+}
+
+@mixin polaris-date-picker-day-today {
+  font-weight: var(--p-font-weight-bold);
+  box-shadow: inset 0 0 0 1px var(--p-color-border);
+}
+
+@mixin polaris-date-picker-day-outside {
+  color: var(--p-color-text-disabled);
+}
+
+@mixin polaris-date-picker-day-disabled {
+  color: var(--p-color-text-disabled);
+  cursor: not-allowed;
+  
+  &:hover {
+    background: transparent;
+  }
+}
+
+@mixin polaris-date-picker-day-in-range {
+  background: var(--p-color-bg-surface-selected);
+  border-radius: 0;
+}
+
+@mixin polaris-date-picker-day-range-start {
+  border-radius: var(--p-border-radius-100) 0 0 var(--p-border-radius-100);
+}
+
+@mixin polaris-date-picker-day-range-end {
+  border-radius: 0 var(--p-border-radius-100) var(--p-border-radius-100) 0;
+}
+
+// ==================== TIME PICKER ====================
+
+@mixin polaris-time-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-100);
+}
+
+@mixin polaris-time-input {
+  width: 60px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  @include polaris-input;
+}
+
+@mixin polaris-time-separator {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-400);
+  color: var(--p-color-text);
+}
+
+@mixin polaris-time-period-toggle {
+  display: flex;
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-100);
+  overflow: hidden;
+}
+
+@mixin polaris-time-period-button {
+  padding: var(--p-space-100) var(--p-space-200);
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+  background: var(--p-color-bg-surface);
+  border: none;
+  cursor: pointer;
+  transition: background var(--p-motion-duration-100) var(--p-motion-ease);
+  
+  &:hover:not(.active) {
+    background: var(--p-color-bg-surface-hover);
+  }
+  
+  &.active {
+    background: var(--p-color-bg-fill-brand);
+    color: var(--p-color-text-on-color);
+  }
+}
+
+// ==================== DATETIME PICKER ====================
+
+@mixin polaris-datetime-picker {
+  @include polaris-date-picker;
+  width: auto;
+  min-width: 320px;
+}
+
+@mixin polaris-datetime-picker-divider {
+  @include polaris-divider;
+  margin: var(--p-space-300) 0;
+}
+
+@mixin polaris-datetime-picker-time-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin polaris-datetime-picker-time-label {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+}
+
+// ==================== COLOR FIELD ====================
+
+@mixin polaris-color-field {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-200);
+}
+
+@mixin polaris-color-field-input {
+  @include polaris-input;
+  flex: 1;
+  font-family: var(--p-font-family-mono);
+  text-transform: uppercase;
+}
+
+@mixin polaris-color-field-swatch {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: var(--p-border-radius-100);
+  border: 1px solid var(--p-color-border);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  // Checkerboard background for transparency
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 8px 8px;
+    background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+@mixin polaris-color-field-swatch-color {
+  position: absolute;
+  inset: 0;
+  // Color set via inline style: background-color
+}
+
+// ==================== COLOR PICKER ====================
+
+@mixin polaris-color-picker {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-200);
+  box-shadow: var(--p-shadow-popover);
+  padding: var(--p-space-300);
+  width: 260px;
+}
+
+@mixin polaris-color-picker-main {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  border-radius: var(--p-border-radius-100);
+  cursor: crosshair;
+  // Saturation/brightness gradient set via inline style or JS
+  background: linear-gradient(to right, white, hsl(0, 100%, 50%));
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, black, transparent);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
+
+@mixin polaris-color-picker-dragger {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  border-radius: var(--p-border-radius-full);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), var(--p-shadow-button);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@mixin polaris-color-picker-sliders {
+  margin-top: var(--p-space-300);
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-200);
+}
+
+@mixin polaris-color-picker-slider {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  border-radius: var(--p-border-radius-full);
+  cursor: pointer;
+}
+
+@mixin polaris-color-picker-hue-slider {
+  @include polaris-color-picker-slider;
+  background: linear-gradient(
+    to right,
+    hsl(0, 100%, 50%),
+    hsl(60, 100%, 50%),
+    hsl(120, 100%, 50%),
+    hsl(180, 100%, 50%),
+    hsl(240, 100%, 50%),
+    hsl(300, 100%, 50%),
+    hsl(360, 100%, 50%)
+  );
+}
+
+@mixin polaris-color-picker-alpha-slider {
+  @include polaris-color-picker-slider;
+  // Checkerboard background
+  background-image: 
+    linear-gradient(45deg, #ccc 25%, transparent 25%),
+    linear-gradient(-45deg, #ccc 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #ccc 75%),
+    linear-gradient(-45deg, transparent 75%, #ccc 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    // Alpha gradient set via inline style
+    background: linear-gradient(to right, transparent, currentColor);
+  }
+}
+
+@mixin polaris-color-picker-slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border: 2px solid white;
+  border-radius: var(--p-border-radius-full);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), var(--p-shadow-button);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+@mixin polaris-color-picker-preview {
+  margin-top: var(--p-space-300);
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-200);
+}
+
+@mixin polaris-color-picker-preview-swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--p-border-radius-100);
+  border: 1px solid var(--p-color-border);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 8px 8px;
+    background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  }
+}
+
+@mixin polaris-color-picker-inputs {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--p-space-100);
+}
+
+@mixin polaris-color-picker-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-025);
+}
+
+@mixin polaris-color-picker-input-label {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-275);
+  color: var(--p-color-text-secondary);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@mixin polaris-color-picker-input {
+  width: 100%;
+  padding: var(--p-space-100);
+  font-family: var(--p-font-family-mono);
+  font-size: var(--p-font-size-300);
+  text-align: center;
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-100);
+  background: var(--p-color-bg-surface);
+  color: var(--p-color-text);
+  
+  &:focus {
+    outline: none;
+    border-color: var(--p-color-focus-ring);
+    box-shadow: 0 0 0 1px var(--p-color-focus-ring);
+  }
+}
+
+// Color swatches grid (preset colors)
+@mixin polaris-color-picker-swatches {
+  margin-top: var(--p-space-300);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--p-space-100);
+}
+
+@mixin polaris-color-picker-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--p-border-radius-050);
+  border: 1px solid var(--p-color-border);
+  cursor: pointer;
+  transition: transform var(--p-motion-duration-100) var(--p-motion-ease);
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+@mixin polaris-color-picker-swatch-selected {
+  box-shadow: 0 0 0 2px var(--p-color-bg-surface), 0 0 0 4px var(--p-color-focus-ring);
+}
+
+// ==================== DROP ZONE ====================
+
+@mixin polaris-drop-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  padding: var(--p-space-400);
+  border: 2px dashed var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  background: var(--p-color-bg-surface);
+  cursor: pointer;
+  transition: border-color var(--p-motion-duration-150) var(--p-motion-ease),
+              background var(--p-motion-duration-150) var(--p-motion-ease);
+  
+  &:hover {
+    border-color: var(--p-color-border-hover);
+    background: var(--p-color-bg-surface-hover);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--p-color-focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+@mixin polaris-drop-zone-active {
+  border-color: var(--p-color-border-brand);
+  background: var(--p-color-bg-surface-selected);
+}
+
+@mixin polaris-drop-zone-error {
+  border-color: var(--p-color-border-critical);
+  background: var(--p-color-bg-fill-critical-secondary);
+}
+
+@mixin polaris-drop-zone-icon {
+  @include polaris-icon(40px);
+  color: var(--p-color-icon);
+  margin-bottom: var(--p-space-200);
+}
+
+@mixin polaris-drop-zone-text {
+  @include polaris-text-body;
+  text-align: center;
+}
+
+@mixin polaris-drop-zone-hint {
+  @include polaris-help-text;
+  text-align: center;
+  margin-top: var(--p-space-100);
+}
+
+// Stacked file upload (shows uploaded files)
+@mixin polaris-drop-zone-stack {
+  @include polaris-drop-zone;
+  min-height: auto;
+  padding: var(--p-space-300);
+}
+
+@mixin polaris-drop-zone-file {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-200);
+  padding: var(--p-space-200);
+  background: var(--p-color-bg-surface-secondary);
+  border-radius: var(--p-border-radius-100);
+  width: 100%;
+}
+
+@mixin polaris-drop-zone-file-thumbnail {
+  @include polaris-thumbnail-small;
+}
+
+@mixin polaris-drop-zone-file-info {
+  flex: 1;
+  min-width: 0;
+}
+
+@mixin polaris-drop-zone-file-name {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-350);
+  color: var(--p-color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin polaris-drop-zone-file-size {
+  @include polaris-help-text;
+}
+
+@mixin polaris-drop-zone-file-remove {
+  @include polaris-button-plain;
+  color: var(--p-color-icon);
+  
+  &:hover {
+    color: var(--p-color-text-critical);
+  }
+}
+

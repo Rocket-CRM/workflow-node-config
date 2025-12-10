@@ -1,0 +1,11 @@
+{
+  "name": "workflow-node-config",
+  "version": "0.0.2",
+  "scripts": {
+    "build": "weweb build",
+    "serve": "weweb serve"
+  },
+  "devDependencies": {
+    "@weweb/cli": "latest"
+  }
+}

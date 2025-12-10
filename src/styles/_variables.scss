@@ -1,0 +1,60 @@
+// ============================================
+// CUSTOMIZABLE VARIABLES
+// Override these to theme your components
+// ============================================
+
+// Brand Colors - Default matches Shopify Admin (dark/black buttons)
+$brand-primary: #303030 !default;           // Main brand color (primary buttons)
+$brand-primary-hover: #1a1a1a !default;     // Hover state
+$brand-primary-active: #0a0a0a !default;    // Active/pressed state
+$brand-primary-disabled: #babec3 !default;  // Disabled state
+$brand-primary-light: #f1f1f1 !default;     // Light background variant
+
+// Link Color - Blue for links
+$link-color: #005bd3 !default;              // Links, text accents
+
+// Alternative Themes (uncomment to use)
+// ---------------------------------------
+
+// Shopify Green Theme (for success-themed or legacy apps)
+// $brand-primary: #008060;
+// $brand-primary-hover: #006e52;
+// $brand-primary-active: #005c45;
+// $brand-primary-disabled: #8ec5b5;
+// $brand-primary-light: #cdfee1;
+
+// Blue Theme
+// $brand-primary: #005bd3;
+// $brand-primary-hover: #004299;
+// $brand-primary-active: #003380;
+// $brand-primary-disabled: #a4c8e8;
+// $brand-primary-light: #e8f4ff;
+
+// Purple Theme
+// $brand-primary: #7c3aed;
+// $brand-primary-hover: #6d28d9;
+// $brand-primary-active: #5b21b6;
+// $brand-primary-disabled: #c4b5fd;
+// $brand-primary-light: #ede9fe;
+
+// Indigo Theme
+// $brand-primary: #4f46e5;
+// $brand-primary-hover: #4338ca;
+// $brand-primary-active: #3730a3;
+// $brand-primary-disabled: #a5b4fc;
+// $brand-primary-light: #e0e7ff;
+
+// Teal Theme
+// $brand-primary: #0d9488;
+// $brand-primary-hover: #0f766e;
+// $brand-primary-active: #115e59;
+// $brand-primary-disabled: #5eead4;
+// $brand-primary-light: #ccfbf1;
+
+// Orange Theme
+// $brand-primary: #ea580c;
+// $brand-primary-hover: #c2410c;
+// $brand-primary-active: #9a3412;
+// $brand-primary-disabled: #fdba74;
+// $brand-primary-light: #ffedd5;
+

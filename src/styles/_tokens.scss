@@ -1,0 +1,158 @@
+// ============================================
+// POLARIS DESIGN TOKENS
+// Shopify Polaris Design System
+// ============================================
+
+@mixin polaris-tokens {
+  // ==================== COLORS ====================
+  
+  // Background Colors
+  --p-color-bg: #f6f6f7;
+  --p-color-bg-surface: #ffffff;
+  --p-color-bg-surface-secondary: #f6f6f7;
+  --p-color-bg-surface-hover: #f1f2f3;
+  --p-color-bg-surface-active: #e7e8ea;
+  --p-color-bg-surface-selected: #f2f7fe;
+  --p-color-bg-surface-disabled: #fafafa;
+  
+  // Fill Colors
+  --p-color-bg-fill: #f1f1f1;
+  --p-color-bg-fill-hover: #e3e3e3;
+  --p-color-bg-fill-active: #d4d4d4;
+  --p-color-bg-fill-transparent-hover: rgba(0, 0, 0, 0.05);
+  --p-color-bg-fill-transparent-active: rgba(0, 0, 0, 0.08);
+  
+  // Brand Colors (Primary actions - dark/black as used in Shopify Admin)
+  --p-color-bg-fill-brand: #303030;
+  --p-color-bg-fill-brand-hover: #1a1a1a;
+  --p-color-bg-fill-brand-active: #0a0a0a;
+  --p-color-bg-fill-brand-disabled: #babec3;
+  
+  // Status Colors
+  --p-color-bg-fill-critical: #d82c0d;
+  --p-color-bg-fill-critical-secondary: #fee9e8;
+  --p-color-bg-fill-success: #008060;
+  --p-color-bg-fill-success-secondary: #cdfee1;
+  --p-color-bg-fill-warning: #ffb800;
+  --p-color-bg-fill-warning-secondary: #fff5d6;
+  --p-color-bg-fill-info: #0070f3;
+  --p-color-bg-fill-info-secondary: #e8f4ff;
+  --p-color-bg-fill-caution: #fff5d6;
+  
+  // Text Colors
+  --p-color-text: #202223;
+  --p-color-text-secondary: #6d7175;
+  --p-color-text-disabled: #8c9196;
+  --p-color-text-on-color: #ffffff;
+  --p-color-text-brand: #005bd3;
+  --p-color-text-critical: #d82c0d;
+  --p-color-text-success: #008060;
+  --p-color-text-warning: #8a6116;
+  --p-color-text-info: #0070f3;
+  --p-color-text-caution: #8a6116;
+  
+  // Border Colors
+  --p-color-border: #c9cccf;
+  --p-color-border-hover: #8c9196;
+  --p-color-border-disabled: #d9dbdd;
+  --p-color-border-brand: #303030;
+  --p-color-border-critical: #d82c0d;
+  --p-color-border-success: #008060;
+  --p-color-border-warning: #ffb800;
+  --p-color-border-info: #0070f3;
+  
+  // Icon Colors
+  --p-color-icon: #5c5f62;
+  --p-color-icon-hover: #1a1c1d;
+  --p-color-icon-disabled: #babfc4;
+  --p-color-icon-critical: #d82c0d;
+  --p-color-icon-success: #008060;
+  --p-color-icon-warning: #ffb800;
+  --p-color-icon-info: #0070f3;
+  
+  // Focus
+  --p-color-focus-ring: #005bd3;
+  
+  // ==================== SPACING ====================
+  // 4px base unit
+  
+  --p-space-0: 0;
+  --p-space-025: 1px;
+  --p-space-050: 2px;
+  --p-space-100: 4px;
+  --p-space-150: 6px;
+  --p-space-200: 8px;
+  --p-space-300: 12px;
+  --p-space-400: 16px;
+  --p-space-500: 20px;
+  --p-space-600: 24px;
+  --p-space-800: 32px;
+  --p-space-1000: 40px;
+  --p-space-1200: 48px;
+  
+  // ==================== TYPOGRAPHY ====================
+  
+  // Font Family
+  --p-font-family-sans: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --p-font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+  
+  // Font Sizes
+  --p-font-size-275: 11px;
+  --p-font-size-300: 12px;
+  --p-font-size-325: 13px;
+  --p-font-size-350: 14px;
+  --p-font-size-400: 16px;
+  --p-font-size-500: 20px;
+  --p-font-size-600: 24px;
+  --p-font-size-700: 28px;
+  
+  // Line Heights
+  --p-font-line-height-300: 16px;
+  --p-font-line-height-400: 20px;
+  --p-font-line-height-500: 24px;
+  --p-font-line-height-600: 28px;
+  --p-font-line-height-700: 32px;
+  
+  // Font Weights
+  --p-font-weight-regular: 400;
+  --p-font-weight-medium: 500;
+  --p-font-weight-semibold: 600;
+  --p-font-weight-bold: 700;
+  
+  // ==================== BORDER RADIUS ====================
+  
+  --p-border-radius-0: 0;
+  --p-border-radius-050: 2px;
+  --p-border-radius-100: 4px;
+  --p-border-radius-150: 6px;
+  --p-border-radius-200: 8px;
+  --p-border-radius-300: 12px;
+  --p-border-radius-400: 16px;
+  --p-border-radius-full: 9999px;
+  
+  // ==================== SHADOWS ====================
+  
+  --p-shadow-0: none;
+  --p-shadow-100: 0 1px 0 rgba(0, 0, 0, 0.05);
+  --p-shadow-200: 0 3px 1px -1px rgba(0, 0, 0, 0.07);
+  --p-shadow-card: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15);
+  --p-shadow-card-hover: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 2px 6px 0 rgba(63, 63, 68, 0.18);
+  --p-shadow-button: 0 1px 0 rgba(0, 0, 0, 0.05);
+  --p-shadow-button-hover: 0 2px 0 rgba(0, 0, 0, 0.08);
+  --p-shadow-button-primary: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  --p-shadow-inset-100: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  --p-shadow-popover: 0 3px 6px -3px rgba(23, 24, 24, 0.08), 0 8px 20px -4px rgba(23, 24, 24, 0.12);
+  
+  // ==================== MOTION ====================
+  
+  --p-motion-duration-0: 0ms;
+  --p-motion-duration-50: 50ms;
+  --p-motion-duration-100: 100ms;
+  --p-motion-duration-150: 150ms;
+  --p-motion-duration-200: 200ms;
+  --p-motion-duration-300: 300ms;
+  --p-motion-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --p-motion-ease-in: cubic-bezier(0.42, 0, 1, 1);
+  --p-motion-ease-out: cubic-bezier(0, 0, 0.58, 1);
+}
+
