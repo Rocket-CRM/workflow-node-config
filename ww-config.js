@@ -14,6 +14,78 @@ export default {
       'channels',
     ],
   },
+  actions: [
+    {
+      name: 'setNodeData',
+      label: { en: 'Set Node Data' },
+      action: 'setNodeData',
+      args: [
+        {
+          name: 'nodeData',
+          type: 'Object',
+          label: { en: 'Node Data' },
+          /* wwEditor:start */
+          bindable: true,
+          /* wwEditor:end */
+        },
+      ],
+      /* wwEditor:start */
+      actionDescription: {
+        en: 'Load a node for editing. Pass the full node object {id, type, position, data}',
+      },
+      /* wwEditor:end */
+    },
+    {
+      name: 'clearNodeData',
+      label: { en: 'Clear / Close Sidebar' },
+      action: 'clearNodeData',
+      /* wwEditor:start */
+      actionDescription: {
+        en: 'Clear the sidebar and close it',
+      },
+      /* wwEditor:end */
+    },
+    {
+      name: 'save',
+      label: { en: 'Save Config' },
+      action: 'save',
+      /* wwEditor:start */
+      actionDescription: {
+        en: 'Trigger save action. Emits config-saved event with {nodeId, config}',
+      },
+      /* wwEditor:end */
+    },
+    {
+      name: 'cancel',
+      label: { en: 'Cancel Changes' },
+      action: 'cancel',
+      /* wwEditor:start */
+      actionDescription: {
+        en: 'Cancel changes and reset to original config. Emits config-cancelled event',
+      },
+      /* wwEditor:end */
+    },
+    {
+      name: 'validate',
+      label: { en: 'Validate Config' },
+      action: 'validate',
+      /* wwEditor:start */
+      actionDescription: {
+        en: 'Run validation on current config. Updates isValid and validationErrors variables',
+      },
+      /* wwEditor:end */
+    },
+    {
+      name: 'getConfig',
+      label: { en: 'Get Current Config' },
+      action: 'getConfig',
+      /* wwEditor:start */
+      actionDescription: {
+        en: 'Returns the current editing config object',
+      },
+      /* wwEditor:end */
+    },
+  ],
   triggerEvents: [
     {
       name: 'config-saved',
