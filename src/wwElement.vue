@@ -290,6 +290,11 @@ export default {
         const defaultConfig = getDefaultConfig(nodeType);
         const mergedConfig = smartMerge(defaultConfig, nodeConfig);
         
+        // Debug logging
+        console.log('[NodeConfig] Received:', { nodeType, nodeConfig });
+        console.log('[NodeConfig] Default:', defaultConfig);
+        console.log('[NodeConfig] Merged:', mergedConfig);
+        
         editingConfig.value = mergedConfig;
         originalConfig.value = deepClone(mergedConfig);
         
