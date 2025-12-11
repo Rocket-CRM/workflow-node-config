@@ -1,170 +1,165 @@
 <template>
   <div class="polaris-card">
-    <!-- Groups Operator -->
-    <div v-if="(config?.groups?.length || 0) > 1" class="polaris-card__section">
-      <div class="polaris-inline polaris-inline--space-between">
-        <span class="polaris-text polaris-text--body-md">Combine groups with</span>
+    <!-- Header -->
+    <div class="polaris-card__section">
+      <div class="polaris-stack polaris-stack--horizontal polaris-stack--space-between polaris-stack--align-center">
+        <h3 class="polaris-text polaris-text--heading-sm">Condition Builder</h3>
         <div class="polaris-button-group polaris-button-group--segmented">
           <button
-            :class="['polaris-button polaris-button--segmented', { 'polaris-button--segmented-selected': config?.groups_operator === 'AND' }]"
-            @click="$emit('update', { ...config, groups_operator: 'AND' })"
-          >AND</button>
+            class="polaris-button polaris-button--segmented"
+            :class="{ 'polaris-button--segmented-selected': config?.groups_operator === 'AND' }"
+            @click="emitUpdate({ ...config, groups_operator: 'AND' })"
+          >All (AND)</button>
           <button
-            :class="['polaris-button polaris-button--segmented', { 'polaris-button--segmented-selected': config?.groups_operator === 'OR' }]"
-            @click="$emit('update', { ...config, groups_operator: 'OR' })"
-          >OR</button>
+            class="polaris-button polaris-button--segmented"
+            :class="{ 'polaris-button--segmented-selected': config?.groups_operator === 'OR' }"
+            @click="emitUpdate({ ...config, groups_operator: 'OR' })"
+          >Any (OR)</button>
         </div>
       </div>
     </div>
 
     <!-- Groups -->
     <div class="polaris-card__section">
-      <div class="polaris-block-stack">
-        <div
-          v-for="(group, gIdx) in (config?.groups || [])"
-          :key="group?.id || gIdx"
-          class="polaris-card polaris-card--subdued"
-        >
-          <div class="polaris-card__section">
-            <div class="polaris-inline polaris-inline--space-between">
-              <span class="polaris-text polaris-text--heading-sm">Group {{ gIdx + 1 }}</span>
+      <div
+        v-for="(group, gIdx) in (config?.groups || [])"
+        :key="group?.id || gIdx"
+        class="polaris-card polaris-card--subdued"
+      >
+        <div class="polaris-card__section">
+          <!-- Group Header -->
+          <div class="polaris-stack polaris-stack--horizontal polaris-stack--space-between polaris-stack--align-center">
+            <span class="polaris-text polaris-text--body-md">Group {{ gIdx + 1 }}</span>
+            <div class="polaris-button-group polaris-button-group--small">
               <button
-                class="polaris-button polaris-button--plain polaris-button--critical polaris-button--icon-only"
-                @click="removeGroup(group?.id)"
-                :disabled="(config?.groups?.length || 0) <= 1"
-                title="Remove group"
-              >
-                <svg viewBox="0 0 20 20" class="polaris-icon polaris-icon--small">
-                  <path d="M14 4h-4V3A1 1 0 009 2H7a1 1 0 00-1 1v1H2a1 1 0 000 2h1v10a2 2 0 002 2h6a2 2 0 002-2V6h1a1 1 0 100-2zM8 4V3h.5v1H8zm3 12H5V6h6v10z" fill="currentColor"/>
-                </svg>
-              </button>
+                class="polaris-button polaris-button--segmented"
+                :class="{ 'polaris-button--segmented-selected': group?.operator === 'AND' }"
+                @click="updateGroupOperator(group?.id, 'AND')"
+              >AND</button>
+              <button
+                class="polaris-button polaris-button--segmented"
+                :class="{ 'polaris-button--segmented-selected': group?.operator === 'OR' }"
+                @click="updateGroupOperator(group?.id, 'OR')"
+              >OR</button>
             </div>
+            <button
+              class="polaris-button polaris-button--plain polaris-button--critical polaris-button--icon-only"
+              @click="removeGroup(group?.id)"
+            ><span class="polaris-icon polaris-icon--small">✕</span></button>
+          </div>
 
-            <!-- Collection Selection -->
-            <div class="polaris-text-field">
-              <label class="polaris-text-field__label">Collection</label>
-              <select
-                class="polaris-select__input"
-                :value="group?.collection || ''"
-                @change="updateGroupCollection(group?.id, $event.target.value)"
-              >
-                <option value="">Select collection...</option>
-                <option
-                  v-for="col in collections"
-                  :key="col?.name"
-                  :value="col?.name"
-                >{{ col?.label || col?.name }}</option>
-              </select>
-            </div>
+          <!-- Collection Selection -->
+          <div class="polaris-text-field">
+            <label class="polaris-text-field__label">Collection</label>
+            <select
+              class="polaris-select__input"
+              :value="group?.collection || ''"
+              @change="updateGroupCollection(group?.id, $event.target.value)"
+            >
+              <option value="">Select collection...</option>
+              <option
+                v-for="col in safeCollections"
+                :key="col?.name"
+                :value="col?.name"
+              >{{ col?.label || col?.name }}</option>
+            </select>
+          </div>
 
-            <!-- Conditions -->
-            <div class="polaris-condition-list">
-              <div
-                v-for="(condition, cIdx) in (group?.conditions || [])"
-                :key="condition?.id || cIdx"
-                class="polaris-condition-item"
-              >
-                <!-- AND/OR badge between conditions -->
-                <div v-if="cIdx > 0" class="polaris-condition-operator">
-                  <div class="polaris-button-group polaris-button-group--segmented polaris-button-group--small">
-                    <button
-                      :class="['polaris-button polaris-button--segmented polaris-button--slim', { 'polaris-button--segmented-selected': group?.operator === 'AND' }]"
-                      @click="updateGroupOperator(group?.id, 'AND')"
-                    >AND</button>
-                    <button
-                      :class="['polaris-button polaris-button--segmented polaris-button--slim', { 'polaris-button--segmented-selected': group?.operator === 'OR' }]"
-                      @click="updateGroupOperator(group?.id, 'OR')"
-                    >OR</button>
-                  </div>
-                </div>
-
-                <div class="polaris-condition-fields">
-                  <!-- Field Selection -->
-                  <div class="polaris-text-field polaris-text-field--flex">
-                    <select
-                      class="polaris-select__input"
-                      :value="condition?.field || ''"
-                      @change="updateConditionField(group?.id, condition?.id, $event.target.value)"
-                      :disabled="!group?.collection"
-                    >
-                      <option value="">Field...</option>
-                      <option
-                        v-for="field in getFieldsForCollection(group?.collection)"
-                        :key="field?.name"
-                        :value="field?.name"
-                      >{{ field?.label || field?.name }}</option>
-                    </select>
-                  </div>
-
-                  <!-- Operator Selection -->
-                  <div class="polaris-text-field polaris-text-field--operator">
-                    <select
-                      class="polaris-select__input"
-                      :value="condition?.operator || 'equals'"
-                      @change="updateConditionOperator(group?.id, condition?.id, $event.target.value)"
-                      :disabled="!condition?.field"
-                    >
-                      <option
-                        v-for="op in getOperatorsForField(group?.collection, condition?.field)"
-                        :key="op.value"
-                        :value="op.value"
-                      >{{ op.label }}</option>
-                    </select>
-                  </div>
-
-                  <!-- Value Input -->
-                  <div v-if="isValueRequired(condition?.operator)" class="polaris-text-field polaris-text-field--flex">
-                    <input
-                      type="text"
-                      class="polaris-text-field__input"
-                      :value="condition?.value || ''"
-                      @input="updateConditionValue(group?.id, condition?.id, $event.target.value)"
-                      placeholder="Value"
-                    />
-                  </div>
-
-                  <!-- Remove Condition -->
-                  <button
-                    class="polaris-button polaris-button--plain polaris-button--icon-only"
-                    @click="removeCondition(group?.id, condition?.id)"
-                    :disabled="(group?.conditions?.length || 0) <= 1"
-                    title="Remove condition"
-                  >
-                    <svg viewBox="0 0 20 20" class="polaris-icon polaris-icon--small">
-                      <path d="M11.414 10l4.293-4.293a1 1 0 00-1.414-1.414L10 8.586 5.707 4.293a1 1 0 00-1.414 1.414L8.586 10l-4.293 4.293a1 1 0 101.414 1.414L10 11.414l4.293 4.293a1 1 0 001.414-1.414L11.414 10z" fill="currentColor"/>
-                    </svg>
-                  </button>
-                </div>
+          <!-- Conditions -->
+          <div class="polaris-condition-list">
+            <div
+              v-for="(cond, cIdx) in (group?.conditions || [])"
+              :key="cond?.id || cIdx"
+              class="polaris-condition-item"
+            >
+              <div v-if="cIdx > 0" class="polaris-condition-operator">
+                <span class="polaris-text polaris-text--body-md">{{ group?.operator || 'AND' }}</span>
               </div>
-
-              <!-- Add Condition Button -->
-              <button
-                class="polaris-button polaris-button--plain polaris-button--full-width"
-                @click="addCondition(group?.id)"
-                :disabled="!group?.collection"
-              >
-                <svg viewBox="0 0 20 20" class="polaris-icon polaris-icon--small">
-                  <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" fill="currentColor"/>
-                </svg>
-                Add condition
-              </button>
+              <div class="polaris-condition-fields">
+                <!-- Field -->
+                <div class="polaris-text-field polaris-text-field--flex">
+                  <label class="polaris-text-field__label">Field</label>
+                  <select
+                    class="polaris-select__input"
+                    :value="cond?.field || ''"
+                    @change="updateConditionField(group?.id, cond?.id, $event.target.value)"
+                  >
+                    <option value="">Select field...</option>
+                    <option
+                      v-for="f in getFieldsForCollection(group?.collection)"
+                      :key="f?.name"
+                      :value="f?.name"
+                    >{{ f?.label || f?.name }}</option>
+                  </select>
+                </div>
+                <!-- Operator -->
+                <div class="polaris-text-field polaris-text-field--operator">
+                  <label class="polaris-text-field__label">Operator</label>
+                  <select
+                    class="polaris-select__input"
+                    :value="cond?.operator || 'equals'"
+                    @change="updateConditionOperator(group?.id, cond?.id, $event.target.value)"
+                  >
+                    <option
+                      v-for="op in getOperatorsForField(group?.collection, cond?.field)"
+                      :key="op?.value"
+                      :value="op?.value"
+                    >{{ op?.label }}</option>
+                  </select>
+                </div>
+                <!-- Value -->
+                <div v-if="isValueRequired(cond?.operator)" class="polaris-text-field polaris-text-field--flex">
+                  <label class="polaris-text-field__label">Value</label>
+                  <input
+                    class="polaris-text-field__input"
+                    type="text"
+                    :value="cond?.value || ''"
+                    placeholder="Enter value..."
+                    @input="updateConditionValue(group?.id, cond?.id, $event.target.value)"
+                  />
+                </div>
+                <!-- Remove -->
+                <button
+                  class="polaris-button polaris-button--plain polaris-button--critical polaris-button--icon-only"
+                  style="align-self: flex-end;"
+                  @click="removeCondition(group?.id, cond?.id)"
+                ><span class="polaris-icon polaris-icon--small">✕</span></button>
+              </div>
             </div>
+          </div>
+
+          <!-- Add Condition -->
+          <div class="polaris-stack polaris-stack--horizontal polaris-stack--tight" style="margin-top: var(--p-space-300);">
+            <button
+              class="polaris-button polaris-button--outline polaris-button--slim"
+              @click="addCondition(group?.id)"
+            >+ Add Condition</button>
           </div>
         </div>
       </div>
 
-      <!-- Add Group Button -->
-      <button class="polaris-button polaris-button--outline polaris-button--full-width" @click="addGroup">
-        <svg viewBox="0 0 20 20" class="polaris-icon polaris-icon--small">
-          <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" fill="currentColor"/>
-        </svg>
-        Add group
-      </button>
+      <!-- Empty State -->
+      <div
+        v-if="!config?.groups?.length"
+        class="polaris-empty-state"
+      >
+        <p class="polaris-text polaris-text--body-md" style="color: var(--p-color-text-secondary);">No condition groups yet</p>
+      </div>
+
+      <!-- Add Group -->
+      <div class="polaris-stack polaris-stack--horizontal" style="margin-top: var(--p-space-400);">
+        <button
+          class="polaris-button polaris-button--full-width"
+          @click="addGroup"
+        >+ Add Group</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue';
+
 const OPERATORS_BY_TYPE = {
   string: [
     { value: 'equals', label: 'equals' },
@@ -180,32 +175,26 @@ const OPERATORS_BY_TYPE = {
     { value: 'equals', label: '=' },
     { value: 'not_equals', label: '≠' },
     { value: 'greater_than', label: '>' },
-    { value: 'greater_or_equal', label: '≥' },
+    { value: 'greater_than_or_equals', label: '≥' },
     { value: 'less_than', label: '<' },
-    { value: 'less_or_equal', label: '≤' },
+    { value: 'less_than_or_equals', label: '≤' },
     { value: 'between', label: 'between' },
+  ],
+  boolean: [
+    { value: 'is_true', label: 'is true' },
+    { value: 'is_false', label: 'is false' },
   ],
   date: [
     { value: 'equals', label: 'equals' },
     { value: 'before', label: 'before' },
     { value: 'after', label: 'after' },
     { value: 'between', label: 'between' },
-    { value: 'within_days', label: 'within X days' },
-    { value: 'within_months', label: 'within X months' },
-  ],
-  boolean: [
-    { value: 'is_true', label: 'is true' },
-    { value: 'is_false', label: 'is false' },
+    { value: 'is_empty', label: 'is empty' },
+    { value: 'is_not_empty', label: 'is not empty' },
   ],
   array: [
     { value: 'contains', label: 'contains' },
     { value: 'not_contains', label: 'does not contain' },
-    { value: 'is_empty', label: 'is empty' },
-    { value: 'is_not_empty', label: 'is not empty' },
-  ],
-  uuid: [
-    { value: 'equals', label: 'equals' },
-    { value: 'not_equals', label: 'not equals' },
     { value: 'is_empty', label: 'is empty' },
     { value: 'is_not_empty', label: 'is not empty' },
   ],
@@ -219,12 +208,19 @@ export default {
   },
   emits: ['update'],
   setup(props, { emit }) {
+    // Safe collections - ensure it's always an array
+    const safeCollections = computed(() => {
+      return Array.isArray(props.collections) ? props.collections : [];
+    });
+
     const emitUpdate = (newConfig) => {
       emit('update', newConfig);
     };
 
     const getFieldsForCollection = (collectionName) => {
-      const collection = props.collections?.find(c => c?.name === collectionName);
+      // Ensure collections is an array before calling .find()
+      const collectionsArray = Array.isArray(props.collections) ? props.collections : [];
+      const collection = collectionsArray.find(c => c?.name === collectionName);
       return collection?.fields || [];
     };
 
@@ -244,19 +240,19 @@ export default {
     };
 
     const addGroup = () => {
-      const newGroup = {
-        id: crypto.randomUUID(),
-        operator: 'AND',
+      const groups = [...(props.config?.groups || [])];
+      groups.push({
+        id: `group-${Date.now()}`,
         collection: '',
+        operator: 'AND',
         conditions: [{
-          id: crypto.randomUUID(),
+          id: `cond-${Date.now()}`,
           field: '',
           operator: 'equals',
           value: '',
-          value_type: 'static',
         }],
-      };
-      emitUpdate({ ...props.config, groups: [...(props.config?.groups || []), newGroup] });
+      });
+      emitUpdate({ ...props.config, groups });
     };
 
     const removeGroup = (groupId) => {
@@ -265,16 +261,31 @@ export default {
     };
 
     const updateGroupCollection = (groupId, collection) => {
-      const groups = (props.config?.groups || []).map(g =>
-        g?.id === groupId ? { ...g, collection } : g
-      );
+      const groups = (props.config?.groups || []).map(g => {
+        if (g?.id === groupId) {
+          return {
+            ...g,
+            collection,
+            conditions: [{
+              id: `cond-${Date.now()}`,
+              field: '',
+              operator: 'equals',
+              value: '',
+            }],
+          };
+        }
+        return g;
+      });
       emitUpdate({ ...props.config, groups });
     };
 
     const updateGroupOperator = (groupId, operator) => {
-      const groups = (props.config?.groups || []).map(g =>
-        g?.id === groupId ? { ...g, operator } : g
-      );
+      const groups = (props.config?.groups || []).map(g => {
+        if (g?.id === groupId) {
+          return { ...g, operator };
+        }
+        return g;
+      });
       emitUpdate({ ...props.config, groups });
     };
 
@@ -283,13 +294,15 @@ export default {
         if (g?.id === groupId) {
           return {
             ...g,
-            conditions: [...(g?.conditions || []), {
-              id: crypto.randomUUID(),
-              field: '',
-              operator: 'equals',
-              value: '',
-              value_type: 'static',
-            }],
+            conditions: [
+              ...(g?.conditions || []),
+              {
+                id: `cond-${Date.now()}`,
+                field: '',
+                operator: 'equals',
+                value: '',
+              },
+            ],
           };
         }
         return g;
@@ -315,9 +328,12 @@ export default {
         if (g?.id === groupId) {
           return {
             ...g,
-            conditions: (g?.conditions || []).map(c =>
-              c?.id === conditionId ? { ...c, field, value: '' } : c
-            ),
+            conditions: (g?.conditions || []).map(c => {
+              if (c?.id === conditionId) {
+                return { ...c, field, operator: 'equals', value: '' };
+              }
+              return c;
+            }),
           };
         }
         return g;
@@ -330,9 +346,12 @@ export default {
         if (g?.id === groupId) {
           return {
             ...g,
-            conditions: (g?.conditions || []).map(c =>
-              c?.id === conditionId ? { ...c, operator } : c
-            ),
+            conditions: (g?.conditions || []).map(c => {
+              if (c?.id === conditionId) {
+                return { ...c, operator };
+              }
+              return c;
+            }),
           };
         }
         return g;
@@ -345,9 +364,12 @@ export default {
         if (g?.id === groupId) {
           return {
             ...g,
-            conditions: (g?.conditions || []).map(c =>
-              c?.id === conditionId ? { ...c, value } : c
-            ),
+            conditions: (g?.conditions || []).map(c => {
+              if (c?.id === conditionId) {
+                return { ...c, value };
+              }
+              return c;
+            }),
           };
         }
         return g;
@@ -356,6 +378,7 @@ export default {
     };
 
     return {
+      safeCollections,
       getFieldsForCollection,
       getOperatorsForField,
       isValueRequired,
@@ -379,25 +402,19 @@ export default {
 .polaris-card {
   @include polaris-tokens;
   @include polaris-card;
-  
-  &--subdued { @include polaris-card-subdued; }
+  &--subdued {
+    background: var(--p-color-bg-surface-secondary);
+    box-shadow: none;
+    border: 1px solid var(--p-color-border);
+  }
+  &__section { @include polaris-card-section; }
 }
 
-.polaris-card__section { 
-  @include polaris-card-section;
-  
-  > * + * { margin-top: var(--p-space-300); }
-}
-
-.polaris-inline {
-  @include polaris-inline;
+.polaris-stack {
+  @include polaris-stack;
+  &--horizontal { flex-direction: row; }
   &--space-between { justify-content: space-between; }
-  &--gap-tight { gap: var(--p-space-200); }
-}
-
-.polaris-block-stack {
-  @include polaris-block-stack;
-  gap: var(--p-space-300);
+  &--align-center { align-items: center; }
   &--tight { gap: var(--p-space-200); }
 }
 
@@ -483,4 +500,3 @@ export default {
 .polaris-card--subdued + .polaris-card--subdued { margin-top: var(--p-space-300); }
 .polaris-text-field + .polaris-text-field { margin-top: var(--p-space-300); }
 </style>
-
